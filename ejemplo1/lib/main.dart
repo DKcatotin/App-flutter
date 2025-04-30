@@ -25,6 +25,12 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        //pie de pagina 
+        /*
+        djdaidniandand
+        maodoadoamdmam
+        mdodmm
+        */
         bottomNavigationBar: BottomAppBar(
           color: Colors.indigo,
           child: Padding(
