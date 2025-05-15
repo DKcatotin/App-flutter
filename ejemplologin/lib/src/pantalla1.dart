@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart'; // Asegúrate que esta ruta esté correcta según tu estructura
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -17,30 +18,33 @@ class AppLogin extends StatefulWidget {
 }
 
 class _AppLoginState extends State<AppLogin> {
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 90.0),
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 90.0),
         children: [
           Column(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 100.0,
                 backgroundColor: Color.fromARGB(255, 25, 218, 57),
                 backgroundImage: AssetImage("images/nn.jpg"),
               ),
-              Text(
+              const Text(
                 'Login',
                 style: TextStyle(
                   fontFamily: "Monoton",
                   fontSize: 30.0,
-                  color: const Color.fromARGB(137, 187, 6, 6),
+                  color: Color.fromARGB(137, 187, 6, 6),
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
+              const Text(
                 'Ejemplo2',
                 style: TextStyle(
                   fontFamily: "PressStart",
@@ -49,40 +53,42 @@ class _AppLoginState extends State<AppLogin> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 160.0,
                 height: 15.0,
-                child: Divider(color: const Color.fromARGB(255, 43, 230, 214)),
+                child: Divider(color: Color.fromARGB(255, 43, 230, 214)),
               ),
               TextField(
+                controller: _userController,
                 enableInteractiveSelection: false,
                 autofocus: true,
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   hintText: 'Usuario',
                   labelText: 'usuario',
-                  icon: Icon(Icons.person),
+                  icon: const Icon(Icons.person),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(color: Colors.black54),
+                    borderSide: const BorderSide(color: Colors.black54),
                   ),
                 ),
               ),
-              SizedBox(height: 30.0),
+              const SizedBox(height: 30.0),
               TextField(
+                controller: _passController,
+                obscureText: true,
                 enableInteractiveSelection: false,
-                textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   hintText: 'Contraseña',
                   labelText: 'contraseña',
-                  icon: Icon(Icons.lock),
+                  icon: const Icon(Icons.lock),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                     borderSide: BorderSide(color: Colors.red.shade200),
                   ),
                 ),
               ),
-              SizedBox(height: 35),
+              const SizedBox(height: 35),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -90,18 +96,28 @@ class _AppLoginState extends State<AppLogin> {
                     width: 160,
                     child: FloatingActionButton.extended(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/pantalla1");
+                        String username = _userController.text.trim();
+                        if (username.isNotEmpty) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => HomePage(username: username),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Ingresa un nombre de usuario')),
+                          );
+                        }
                       },
-                      label: Text("Iniciar Sesion"),
-                      icon: Icon(Icons.login),
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      label: const Text("Iniciar Sesión"),
+                      icon: const Icon(Icons.login),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                     ),
                   )
                 ],
               ),
-              SizedBox(height: 20),
-
-              // Nuevo botón: Registrarse
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -109,18 +125,15 @@ class _AppLoginState extends State<AppLogin> {
                     onPressed: () {
                       Navigator.pushNamed(context, "/register");
                     },
-                    icon: Icon(Icons.app_registration),
-                    label: Text("Registrarse"),
+                    icon: const Icon(Icons.app_registration),
+                    label: const Text("Registrarse"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,
                     ),
                   ),
                 ],
               ),
-
-              SizedBox(height: 10),
-
-              
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -128,8 +141,8 @@ class _AppLoginState extends State<AppLogin> {
                     onPressed: () {
                       Navigator.pushNamed(context, "/forgot");
                     },
-                    icon: Icon(Icons.lock_open),
-                    label: Text("¿Olvidaste tu contraseña?"),
+                    icon: const Icon(Icons.lock_open),
+                    label: const Text("¿Olvidaste tu contraseña?"),
                   ),
                 ],
               ),
